@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Service Status Monitor</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <main class="container">
+
+        <header>
+            <div>
+                <span class="badge">DEVOPS LAB</span>
+                <h1>Service Status Monitor</h1>
+                <p>Monitoramento dos serviços do ambiente.</p>
+            </div>
+
+            <div class="summary">
+                <strong id="online-count">4</strong>
+                <span>serviços online</span>
+            </div>
+        </header>
+
+        <section class="services">
+
+            <div class="service" data-status="online">
+                <div>
+                    <h2>Kubernetes API</h2>
+                    <p>Cluster principal</p>
+                </div>
+
+                <span class="status">Online</span>
+            </div>
+
+            <div class="service" data-status="online">
+                <div>
+                    <h2>Docker Registry</h2>
+                    <p>Container Registry</p>
+                </div>
+
+                <span class="status">Online</span>
+            </div>
+
+            <div class="service" data-status="online">
+                <div>
+                    <h2>GitHub Actions</h2>
+                    <p>Pipeline CI/CD</p>
+                </div>
+
+                <span class="status">Online</span>
+            </div>
+
+            <div class="service" data-status="online">
+                <div>
+                    <h2>Web Application</h2>
+                    <p>Frontend</p>
+                </div>
+
+                <span class="status">Online</span>
+            </div>
+
+        </section>
+
+        <section class="controls">
+
+            <h3>Simular incidente</h3>
+
+            <div class="buttons">
+                <button onclick="setStatus('online')">
+                    Todos Online
+                </button>
+
+                <button onclick="setStatus('warning')">
+                    Serviço Degradado
+                </button>
+
+                <button onclick="setStatus('offline')">
+                    Serviço Offline
+                </button>
+            </div>
+
+        </section>
+
+        <footer>
+            Atualizado em <span id="last-update"></span>
+        </footer>
+
+    </main>
+
+    <script src="script.js"></script>
+
+</body>
+</html>
