@@ -1,0 +1,39 @@
+name: Build and Deploy Status Monitor
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Baixar codigo
+        uses: actions/checkout@v4
+
+      - name: Login no Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Build e Push da imagem
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          push: true
+          tags: |
+            cloudlabhost/status-monitor:latest
+            cloudlabhost/status-monitor:${{ github.sha }}
+
+  deploy:
+    needs: build
+    runs-on: [self-hosted, Linux, X64, status-monitor]
+
+    steps:
+      - name: Atualizar Kubernetes
+        run: |
+          kubectl set image deployment/status-monitor status-monitor=cloudlabhost/status-monitor:${{ github.sha }}
+          kubectl rollout status deployment/status-monitor --timeout=120s
